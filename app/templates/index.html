@@ -1,44 +1,37 @@
+{% extends 'base.html'%}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if title %}
+    <title> {{ title }}</title>
+    {% else %}
+    <title> Welcome to the best Movie Review website </title>
+    {% endif %}
+    <title>JVUNE</title>
+    {% block styles%} {{ super() }}
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}"> {% endblock %}
 </head>
 
 <body>
-    <!-- Styles block -->
+    {% block content %}
+    <div class="row">
+        <div class="column" style="float: left;">
+            <div class="card">
 
-    {% block styles%} {{ super() }}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}"> {% endblock %}
-    <header class="masthead">
-        <div class="container h-100">
-            <div class="row h-100">
-                <div class="col-lg-7 my-auto">
-                    <div class="header-content mx-auto">
-                        <h1 class="mb-5">New Age is an app landing page that will help you beautifully showcase your new mobile app, or anything else!</h1>
-                        <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Start Now for Free!</a>
-                    </div>
-                </div>
-                <div class="col-lg-5 my-auto">
-                    <div class="device-container">
-                        <div class="device-mockup iphone6_plus portrait white">
-                            <div class="device">
-                                <div class="screen">
-                                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                    <img src="" class="img-fluid" alt="">
-                                </div>
-                                <div class="button">
-                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h1 class="mb-5 ">New Age is an app landing page that will help you beautifully showcase your new mobile app, or anything else!</h1>
+                <!-- <a href="#download " class="btn btn-outline btn-xl js-scroll-trigger ">Start Now for Free!</a> -->
             </div>
         </div>
-    </header>
+        <div class="coumn">
+            <div class="card">
+                <img src="" alt="">
+            </div>
+        </div>
+    </div>
+    {% endblock %}
 </body>
 
 </html>

@@ -1,48 +1,48 @@
-header.masthead {
-    position: relative;
-    width: 100%;
-    padding-top: 150px;
-    padding-bottom: 100px;
-    color: white;
-    background: url("../img/bg-pattern.png"), #7b4397;
-    background: url("../img/bg-pattern.png"), linear-gradient(to left, #7b4397, #dc2430);
+body {
+    font-family: 'Sacramento', cursive;
 }
 
-header.masthead .header-content {
-    max-width: 500px;
-    margin-bottom: 100px;
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+
+
+/* Remove extra left and right margins, due to padding in columns */
+
+.row {
+    margin: 0 -5px;
+    font-family: 'Sacramento', cursive;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/* Style the counter cards */
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /* this adds the "card" effect */
+    padding: 16px;
     text-align: center;
+    background-color: #f1f1f1;
 }
 
-header.masthead .header-content h1 {
-    font-size: 30px;
-}
 
-header.masthead .device-container {
-    max-width: 325px;
-    margin-right: auto;
-    margin-left: auto;
-}
+/* Responsive columns - one column layout (vertical) on small screens */
 
-header.masthead .device-container .screen img {
-    border-radius: 3px;
-}
-
-@media (min-width: 992px) {
-    header.masthead {
-        height: 100vh;
-        min-height: 775px;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-    header.masthead .header-content {
-        margin-bottom: 0;
-        text-align: left;
-    }
-    header.masthead .header-content h1 {
-        font-size: 50px;
-    }
-    header.masthead .device-container {
-        max-width: 325px;
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
     }
 }
