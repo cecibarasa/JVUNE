@@ -1,8 +1,8 @@
 from flask import render_template
-from app import app
+from . import main
 
 #views
-@app.route('/')
+@main.route('/')
 def index():
     '''
     view root page that retunrs index page with its data
