@@ -7,7 +7,7 @@ def index():
     '''
     view root page that retunrs index page with its data
     '''
-    title = 'JVUNE - Welcome'
+    title = 'JVUNE - Welcome to JVUNE Blogs'
 
     return render_template('index.html', title = title)
 

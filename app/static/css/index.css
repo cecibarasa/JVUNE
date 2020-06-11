@@ -1,42 +1,49 @@
 #mast {
     font-family: 'Courgette', cursive;
+    background-attachment: fixed;
+    background-image: url('../image/write.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#mast::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 header.masthead .header-content {
     max-width: 500px;
-    margin-bottom: 100px;
     text-align: center;
+    opacity: 5;
 }
 
 header.masthead .header-content h1 {
     font-size: 30px;
+    color: antiquewhite;
+    padding-top: 30px;
 }
 
 header.masthead .device-container {
-    max-width: 325px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
 }
 
 header.masthead .device-container .screen img {
     border-radius: 3px;
+    width: 390px;
 }
 
 @media (min-width: 992px) {
-    header.masthead {
-        height: 100vh;
-        min-height: 775px;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
     header.masthead .header-content {
         margin-bottom: 0;
         text-align: left;
     }
     header.masthead .header-content h1 {
         font-size: 50px;
-    }
-    header.masthead .device-container {
-        max-width: 325px;
     }
 }
