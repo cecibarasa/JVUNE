@@ -22,18 +22,19 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True, index = True)
     bio = db.Column(db.String(1000))
     profile_pic_path = db.Column(db.String)
-    secure_password = db.Column(db.String(255),nullable = False)
+    password_hash = db.Column(db.String(255))
     blogs = db.relationship('Blog',backref = 'user', lazy = 'dynamic')
-    comments = db.relationship('Comment',backref = 'user', lazy = 'dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
+    photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
     
     @property
     def set_password(self):
         raise AttributeError('You cannot read the password attribute')
     @set_password.setter
     def password(self, password):
-        self.secure_password = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
     def verify_password(self, password):
-        return check_password_hash(self.secure_password,password) 
+        return check_password_hash(self.password_hash,password) 
     def save_u(self):
         db.session.add(self)
         db.session.commit()
@@ -43,12 +44,18 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+class PhotoProfile(db.Model):
+    __tablename__ = 'profile_photos'
+
+    id = db.Column(db.Integer,primary_key = True)
+    pic_path = db.Column(db.String())
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))        
+
 class Blog(db.Model):
     __tablename__ = 'blogs'
     id = db.Column(db.Integer,primary_key = True)
     blog_title = db.Column(db.String)
     blog_content = db.Column(db.String(1000))
-    category = db.Column(db.String(), nullable = False)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship('Comment',backref =  'blog_id',lazy = "dynamic")
@@ -58,10 +65,6 @@ class Blog(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
-    def get_blogs(cls,category):
-        blogs = Blog.query.filter_by(category = category).all()
-        return blogs
 
     @classmethod
     def get_blog(cls,id):
@@ -70,7 +73,7 @@ class Blog(db.Model):
         return blog
 
     def __repr__(self):
-        return f'Blog {self.blog_title}, {self.category}'
+        return f'Blog {self.blog_title}'
 
 
 class Comment(db.Model):

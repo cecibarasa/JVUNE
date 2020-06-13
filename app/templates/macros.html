@@ -1,8 +1,8 @@
 {% macro displayBlogs(blogs_list)%} {%for blog in blogs_list%}
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
     <div style="border: 1px solid #6184D8; border-radius: 5px; padding: 10px; font-size:16px; margin: 10px;">
-        <h4>{{blog.blog_title}}</h4>
-        <p>{{blog.blog_content| truncate(100)}}</p>
+        <h4>{{blog.title}}</h4>
+        <p>{{blog.content| truncate(100)}}</p>
         <p>Written by: {{blog.user.username}} <br> <a href="/blog/{{blog.id}}" class="btn btn-primary" style="margin-top: 10px; background-color: #6184D8; color: #000; border:none;">View Blog</a> </p>
     </div>
 </div>
@@ -17,7 +17,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteCommentModalLabel">Delete Comment?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>

@@ -1,0 +1,35 @@
+{% extends 'base.html'%} {% import 'macros.html' as macro%} {% import "bootstrap/wtf.html" as wtf %} {% block styles%} {{ super() }}
+<link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/index.css"> {% endblock %}
+<!-- Content block -->
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h4>{{blog.blog_title}}</h4>
+            <p>{{blog.blog_content}}</p>
+            <small>Posted on {{date}} by {{blog.user.username}}</small> {% if current_user.is_authenticated %}
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{url_for('main.update_blog',id=blog.id)}}" style="border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" class="btn btn-sm">Update Blog</a>
+                </div>{%endif%}
+            </div>
+            <div class="row">
+                <h3 class="text-center" style="border-bottom: 1px solid #6184D8; padding-bottom: 10px;">Comments</h3>
+                {{macro.displayComments(comments)}}
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h3 class="text-center" style="border-bottom: 2px solid #6184D8; color: #000; padding-bottom: 10px;">New Comment</h3>
+            {{ wtf.quick_form(comment_form) }}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+{%endblock%}

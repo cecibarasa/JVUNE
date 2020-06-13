@@ -18,35 +18,35 @@
     right: 0;
 }
 
-section.masthead .section-content {
+section.container-fluid .section-content {
     max-width: 500px;
     text-align: center;
     opacity: 5;
 }
 
-section.masthead .section-content h3 {
+section.container-fluid .section-content h3 {
     font-size: 30px;
     color: rgb(240, 235, 235);
     padding-top: 30px;
 }
 
-section.masthead .device-container {
+section.container-fluid .device-container {
     margin-right: 0;
     margin-left: 0;
     padding: 0;
 }
 
-section.masthead .device-container .screen img {
+section.container-fluid .device-container .screen img {
     border-radius: 3px;
     width: 390px;
 }
 
 @media (min-width: 992px) {
-    section.masthead .section-content {
+    section.container-fluid .section-content {
         margin-bottom: 0;
         text-align: left;
     }
-    section.masthead .section-content h1 {
+    section.container-fluid .section-content h1 {
         font-size: 50px;
     }
 }

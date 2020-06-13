@@ -1,10 +1,10 @@
-from flask import render_template, request, redirect,url_for
+from flask import render_template, request, redirect,url_for,abort
 from . import main
 from ..requests import get_quote
 from flask_login import login_required,current_user
 from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db
-from ..models import User,Blog,Comment
+from ..models import User,Blog,Comment,PhotoProfile
 
 #views
 @main.route('/')
@@ -15,7 +15,7 @@ def index():
     title = 'JVUNE | Welcome to JVUNE Blogs'
     quote = get_quote()
 
-    return render_template('index.html', title=title, quote=quote)
+    return render_template('index.html', title=title, quote=quote)    
     
 @main.route('/user/<uname>')
 def profile(uname):
@@ -45,45 +45,36 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-    return render_template('profile/update.html', form=form)
+    return render_template('profile/update.html',form =form)
 
-@main.route('/user/<uname>/update/pic', methods = ['POST'])
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
     if 'photo' in request.files:
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         user.profile_pic_path = path
+        user_photo = PhotoProfile(pic_path = path,user = user)
         db.session.commit()
-
-    return redirect(url_for('main.profile', uname=uname))
-
-@main.route('/blog/delete/<int:id>', methods = ['GET', 'POST'])
-@login_required
-def delete_blog(id):
-    blog = Blog.get_blog(id)
-    db.session.delete(blog)
-    db.session.commit()
-
-    return render_template('blogs.html', id=id, blog=blog)
+    return redirect(url_for('main.profile',uname=uname))
 
 @main.route('/blogs/new', methods = ['GET','POST'])
 @login_required
 def new_blog():
-    legend = 'New Blog'
+    
     form = BlogForm()
     if form.validate_on_submit():
         title = form.title.data
         blog = form.text.data
-        category = form.category.data
 
-        new_blog = Blog(blog_title = title,blog_content = blog, category = category,user = current_user)
+        new_blog = Blog(blog_title = title,blog_content = blog, user = current_user)
         new_blog.save_blog()
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.blogs'))
 
     title = 'New Blog'
-    return render_template('new_blog.html', legend=legend, title=title, blog_form=form)
+    return render_template('new_blog.html',blog_form=form)
 
 @main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
 @login_required
@@ -119,7 +110,7 @@ def user_blogs(uname):
 
     return render_template('profile/blogs.html', user = user, blogs = blogs)
 
-@main.route('/blogs/recent', methods = ['GET','POST'])
+@main.route('/blogs', methods = ['GET','POST'])
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
 
@@ -128,7 +119,7 @@ def blogs():
 @main.route('/blog/<int:id>/update', methods = ['GET','POST'])
 @login_required
 def update_blog(id):
-    legend = 'Update Blog'
+    
     blog = Blog.get_blog(id)
     form = BlogForm()
     if form.validate_on_submit():
@@ -136,9 +127,9 @@ def update_blog(id):
         blog.blog_content = form.text.data
         
         db.session.commit()
-        return redirect(url_for('main.blog', id = id))
+        return redirect(url_for('main.blogs', id = id))
     elif request.method == 'GET':
         form.title.data = blog.blog_title
         form.text.data = blog.blog_content
-    form.category.data = blog.category
-    return render_template('new_blog.html', legend = legend, blog_form = form, id=id)                     
+    
+    return render_template('new_blog.html', blog_form = form, id=id)                     

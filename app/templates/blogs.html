@@ -1,4 +1,6 @@
-{% extends 'base.html'%} {%import 'macros.html' as macro%} {% block content %}
+{% extends 'base.html'%} {%import 'macros.html' as macro%}{% block styles%} {{ super() }}
+<link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/index.css"> {% endblock %} {% block content %}
 <div class="container">
     <div class="row">
         <h2 class="text-center" style="border-bottom: 1px solid #372e5f; padding-bottom: 10px;">Recent Posts</h2>

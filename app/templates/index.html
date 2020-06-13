@@ -16,7 +16,30 @@
 </head>
 
 <body>
-    {% block content %} {% endblock %}
+    {% block content %}
+    <section class="container-fluid" id="mast">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-7 my-auto">
+                    <div class="section-content mx-auto">
+                        <h3 class="mb-5">{{ quote.quote }}</h3>
+                        <h3 class="mb-5">~{{ quote.author }}</h3>
+                    </div>
+                </div>
+                <div class="col-lg-5 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup ">
+                            <div class="device">
+                                <div class="screen">
+                                    <img src="../static/image/jazzz.jpg" class="img-fluid" alt="" width="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endblock %}
 
 </body>
 
