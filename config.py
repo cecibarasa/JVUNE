@@ -1,3 +1,4 @@
+import os
 class Config:
     '''
     General configuration parent class
@@ -14,7 +15,8 @@ class ProdConfig(Config):
         Config: The parent configuration class with General configuration settings
     '''
     QUOTE_API_BASE_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
-    pass
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://nabalayo:karitie@localhost/jvune'
 
 
 class DevConfig(Config):
