@@ -19,7 +19,8 @@
             {% if user.profile_pic_path %}
             <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail"> {%else%}
             <p>No profile picture</p>
-            {% endif %}
+            {% endif %} {% if user == current_user %}
+            <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a> {% endif %}
         </div>
     </div>
 </div>

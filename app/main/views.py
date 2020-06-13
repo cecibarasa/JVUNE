@@ -2,6 +2,8 @@ from flask import render_template, request, redirect,url_for
 from . import main
 from ..requests import get_quote
 from flask_login import login_required
+from .forms import ReviewForm,UpdateProfile
+from .. import db
 
 #views
 @main.route('/')
