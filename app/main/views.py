@@ -3,8 +3,8 @@ from . import main
 from ..requests import get_quote
 from flask_login import login_required,current_user
 from .forms import UpdateProfile,BlogForm,CommentForm
-from .. import db
-from ..models import User,Blog,Comment,PhotoProfile
+from .. import db,photos
+from ..models import User,Blog,Comment,PhotoProfile,Upvote,Downvote
 
 #views
 @main.route('/')
@@ -55,7 +55,6 @@ def update_pic(uname):
         filename = photos.save(request.files['photo'])
         path = f'photos/{filename}'
         user.profile_pic_path = path
-        user_photo = PhotoProfile(pic_path = path,user = user)
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
@@ -132,4 +131,21 @@ def update_blog(id):
         form.title.data = blog.blog_title
         form.text.data = blog.blog_content
     
-    return render_template('new_blog.html', blog_form = form, id=id)                     
+    return render_template('new_blog.html', blog_form=form, id=id)
+
+@main.route('/like/<int:id>', methods=['POST', 'GET'])
+@login_required
+def upvote(id):
+    blog = Blog.query.get(id)
+    new_vote = Upvote(blog=blog, upvote=1)
+    new_vote.save()
+    return redirect(url_for('main.blogs'))
+
+
+@main.route('/dislike/<int:id>', methods=['GET', 'POST'])
+@login_required
+def downvote(id):
+    blog = Blog.query.get(id)
+    new_vote = Downvote(blog=blog, downvote=1)
+    new_vote.save()
+    return redirect(url_for('main.blogs'))                        

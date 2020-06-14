@@ -2,9 +2,9 @@
     font-family: 'Courgette', cursive;
     margin: 0;
     padding: 0;
-    background-image: url('https://images.unsplash.com/photo-1476553986076-d59060d397e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=789&q=80');
+    background-image: url('https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     background-size: cover;
     overflow-y: scroll;
 }
@@ -26,7 +26,7 @@ section.container-fluid .section-content {
 
 section.container-fluid .section-content h3 {
     font-size: 30px;
-    color: rgb(240, 235, 235);
+    color: rgb(32, 32, 32);
     padding-top: 30px;
 }
 

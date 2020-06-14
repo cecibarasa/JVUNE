@@ -20,9 +20,14 @@
                 <li><a href="{{url_for('main.blogs')}}">Recent Blogs</a></li>
                 <li><a href="{{url_for('main.new_blog')}}">New Blog</a></li>
                 <li><a href="{{url_for('main.profile',uname=current_user.username)}}">{{current_user.username}}</a></li>
-                <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+                <li>
+                    <a href="{{url_for('auth.logout')}}">
+                        <i class="fas fa-sign-out-alt" style="width: 2px;"></i>&nbsp;&nbsp;&nbsp; Sign out</a>
+                </li>
                 {% else %}
-                <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+                <li>
+                    <a href="{{url_for('auth.login')}}"><i class="fas fa-sign-in-alt" style="width: 2px;"></i>&nbsp;&nbsp;&nbsp; Sign in</a>
+                </li>
                 {%endif%}
             </ul>
 

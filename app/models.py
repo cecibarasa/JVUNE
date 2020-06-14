@@ -22,25 +22,37 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(255),unique = True, index = True)
     bio = db.Column(db.String(1000))
     profile_pic_path = db.Column(db.String)
-    password_hash = db.Column(db.String(255))
+    secure_password = db.Column(db.String(255),nullable = False)
     blogs = db.relationship('Blog',backref = 'user', lazy = 'dynamic')
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
-    photos = db.relationship('PhotoProfile',backref = 'user',lazy = "dynamic")
+    photos = db.relationship('PhotoProfile', backref='user', lazy="dynamic")
     
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
+    def delete_user(self):
+        db.session.delete(self)
+        db.session.commit()
+
     @property
     def set_password(self):
         raise AttributeError('You cannot read the password attribute')
+
     @set_password.setter
     def password(self, password):
-        self.password_hash = generate_password_hash(password)
+        self.secure_password = generate_password_hash(password)
+
     def verify_password(self, password):
-        return check_password_hash(self.password_hash,password) 
+        return check_password_hash(self.secure_password,password) 
+    
     def save_u(self):
         db.session.add(self)
         db.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+    
     def __repr__(self):
         return f'User {self.username}'
 
@@ -101,3 +113,48 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'Comment{self.comment}'
+
+class Upvote(db.Model):
+    __tablename__ = 'upvotes'
+    id = db.Column(db.Integer, primary_key=True)
+    upvote = db.Column(db.Integer, default=1)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    def upvote(cls, id):
+        upvote_blog = Upvote(user=current_user, blog_id=id)
+        upvote_blog.save()
+    @classmethod
+    def query_upvotes(cls, id):
+        upvote = Upvote.query.filter_by(blog_id=id).all()
+        return upvote
+    @classmethod
+    def all_upvotes(cls):
+        upvotes = Upvote.query.order_by('id').all()
+        return upvotes
+    def __repr__(self):
+        return f'{self.user_id}:{self.blog_id}'
+class Downvote(db.Model):
+    __tablename__ = 'downvotes'
+    id = db.Column(db.Integer, primary_key=True)
+    downvote = db.Column(db.Integer, default=1)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    def downvote(cls, id):
+        downvote_blog = Downvote(user=current_user, blog_id=id)
+        downvote_blog.save()
+    @classmethod
+    def query_downvotes(cls, id):
+        downvote = Downvote.query.filter_by(blog_id=id).all()
+        return downvote
+    @classmethod
+    def all_downvotes(cls):
+        downvote = Downvote.query.order_by('id').all()
+        return downvote
+    def __repr__(self):
+        return f'{self.user_id}:{self.blog_id}'        

@@ -1,4 +1,4 @@
-from app.models import Comment, User,Blog
+from app.models import Comment, User,Blog,Upvote,Downvote
 from app import db
 import unittest
 
