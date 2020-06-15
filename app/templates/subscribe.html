@@ -1,9 +1,11 @@
-{% extends 'base.html'%} {% import "bootstrap/wtf.html" as wtf %} {% block content %}
+{% extends 'base.html'%} {% import "bootstrap/wtf.html" as wtf %} {% block content %}{% block styles%} {{ super() }}
+<link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static/css/blog.css"> {% endblock %}
 <div class="container">
     <div class="row" style="margin-top: 50px;">
         <div class="col-md-3"> </div>
-        <div class="col-md-6" style="border: 1px solid #6184D8; padding: 30px 10px; border-radius: 5px; font-size: 16px;">
-            <h2 class="text-center" style="border-bottom: 2px solid #6184D8; color: #6184D8; padding-bottom: 10px;">Subscibe To JVUNE</h2>
+        <div class="col-md-6" style=" font-size: 16px;">
+            <h2 class="text-center" style=" padding-bottom: 10px;">Subscibe To JVUNE</h2>
             {{ wtf.quick_form(subscriber_form) }}
         </div>
         <div clas="col-md-3"> </div>

@@ -143,7 +143,9 @@ def upvote(id):
     blog = Blog.query.get(id)
     vote_mpya = Upvote(blog=blog, upvote=1)
     vote_mpya.save()
-    return redirect(url_for('main.blog', id=blog_id))
+    return redirect(url_for('main.blogs'))
+
+    return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
 
 @main.route('/dislike/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -151,12 +153,17 @@ def downvote(id):
     blog = Blog.query.get(id)
     vm = Downvote(blog=blog, downvote=1)
     vm.save()
-    return redirect(url_for('main.blog', id=blog_id))
+    return redirect(url_for('main.blog'))
+
+    return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
 
 @main.route('/subscribe', methods=['GET','POST'])
 def subscriber():
     subscriber_form=SubscriberForm()
     blogs = Blog.query.order_by(Blog.posted.desc()).all()
+    subscriber = Blog.query.all()
+
+    blogs = Blog.query.all()
 
     if subscriber_form.validate_on_submit():
         subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
@@ -164,14 +171,10 @@ def subscriber():
         db.session.add(subscriber)
         db.session.commit()
 
-        # mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+        #mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
 
         title= "JVUNE"
-        return render_template('blogs.html',title=title, blog=blog, subscriber_form = subscriber_form)
-
-    subscriber = Blog.query.all()
-
-    blogs = Blog.query.all()
+        return redirect(url_for('main.blogs', title=title, blog=blog, subscriber_form=subscriber_form))
 
 
     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)    

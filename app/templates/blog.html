@@ -1,6 +1,6 @@
 {% extends 'base.html'%} {% import 'macros.html' as macro%} {% import "bootstrap/wtf.html" as wtf %} {% block styles%} {{ super() }}
 <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../static/css/index.css"> {% endblock %}
+<link rel="stylesheet" href="../static/css/blog.css"> {% endblock %}
 <!-- Content block -->
 {%block content%}
 <div class="container">
@@ -12,7 +12,7 @@
             <small>Posted on {{date}} by {{blog.user.username}}</small> {% if current_user.is_authenticated %}
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{url_for('main.update_blog',id=blog.id)}}" style="border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" class="btn btn-sm">Update Blog</a>
+                    <a href="{{url_for('main.update_blog',id=blog.id)}}" style="border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" class="btn btn-sm"><i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Update Blog</a>
                 </div>{%endif%}
 
                 <a href="/like/{{blog.id}} "><button ><i class="far fa-thumbs-up"></i> {{blog.upvote.count()}}</button></a>
