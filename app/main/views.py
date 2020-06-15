@@ -88,6 +88,7 @@ def delete_comment(id):
 def blog(id):
     blog = Blog.get_blog(id)
     posted_date = blog.posted.strftime('%b %d, %Y')
+    
 
     form = CommentForm()
     if form.validate_on_submit():
@@ -112,8 +113,10 @@ def user_blogs(uname):
 @main.route('/blogs', methods = ['GET','POST'])
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
+    likes = Upvote.query.all()
+    
 
-    return render_template('blogs.html',blogs = blogs)
+    return render_template('blogs.html',blogs = blogs,likes = likes)
 
 @main.route('/blog/<int:id>/update', methods = ['GET','POST'])
 @login_required
@@ -137,15 +140,37 @@ def update_blog(id):
 @login_required
 def upvote(id):
     blog = Blog.query.get(id)
-    new_vote = Upvote(blog=blog, upvote=1)
-    new_vote.save()
-    return redirect(url_for('main.blogs'))
-
+    vote_mpya = Upvote(blog=blog, upvote=1)
+    vote_mpya.save()
+    return redirect(url_for('main.blogs', blog_id=blog))
 
 @main.route('/dislike/<int:id>', methods=['GET', 'POST'])
 @login_required
 def downvote(id):
     blog = Blog.query.get(id)
-    new_vote = Downvote(blog=blog, downvote=1)
-    new_vote.save()
-    return redirect(url_for('main.blogs'))                        
+    vm = Downvote(blog=blog, downvote=1)
+    vm.save()
+    return redirect(url_for('main.blogs', blog_id=blog))
+
+@main.route('/subscribe', methods=['GET','POST'])
+def subscriber():
+    subscriber_form=SubscriberForm()
+    blogs = Blog.query.order_by(Blog.posted.desc()).all()
+
+    if subscriber_form.validate_on_submit():
+        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+
+        title= "JVUNE"
+        return render_template('index.html',title=title, blogs=blogs)
+
+    subscriber = Blog.query.all()
+
+    blogs = Blog.query.all()
+
+
+    return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)    

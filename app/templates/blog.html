@@ -14,22 +14,27 @@
                 <div class="col-md-6">
                     <a href="{{url_for('main.update_blog',id=blog.id)}}" style="border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" class="btn btn-sm">Update Blog</a>
                 </div>{%endif%}
+
+                <a href="/like/{{blog.id}} "><button ><i class="far fa-thumbs-up"></i> {{blog.upvote.count()}}</button></a>
+
+                <a href="/dislike/{{blog.id}} "><button ><i class="far fa-thumbs-down"></i> {{blog.downvote.count()}}</button></a>
             </div>
-            <div class="row">
-                <h3 class="text-center" style="border-bottom: 1px solid #6184D8; padding-bottom: 10px;">Comments</h3>
+            <div class=" row ">
+                <h3 class="text-center " style="border-bottom: 1px solid #6184D8; padding-bottom: 10px; ">Comments</h3>
                 {{macro.displayComments(comments)}}
                 <small>Posted on {{date}}</small>
+
+
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3 "></div>
     </div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <h3 class="text-center" style="border-bottom: 2px solid #6184D8; color: #000; padding-bottom: 10px;">New Comment</h3>
+    <div class="row ">
+        <div class="col-md-3 "></div>
+        <div class="col-md-6 ">
+            <h3 class="text-center " style="border-bottom: 2px solid #6184D8; color: #000; padding-bottom: 10px; ">New Comment</h3>
             {{ wtf.quick_form(comment_form) }}
         </div>
-        <div class="col-md-3"></div>
     </div>
 </div>
 

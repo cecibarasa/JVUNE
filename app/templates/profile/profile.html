@@ -32,8 +32,7 @@
             </div>
 
             <div class="col-md-4">
-                {{macro.displayBlogs(blogs)}}
-
+                {% if user == current_user %} {{macro.displayBlogs(blogs)}}{% endif %}
             </div>
 
         </div>

@@ -70,7 +70,9 @@ class Blog(db.Model):
     blog_content = db.Column(db.String(1000))
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    comments = db.relationship('Comment',backref =  'blog_id',lazy = "dynamic")
+    comments = db.relationship('Comment', backref='blog_id', lazy="dynamic")
+    upvote = db.relationship('Upvote', backref='blog', lazy='dynamic')
+    downvote = db.relationship('Downvote', backref='blog', lazy='dynamic')
 
 
     def save_blog(self):
@@ -157,4 +159,10 @@ class Downvote(db.Model):
         downvote = Downvote.query.order_by('id').all()
         return downvote
     def __repr__(self):
-        return f'{self.user_id}:{self.blog_id}'        
+        return f'{self.user_id}:{self.blog_id}'
+
+class Subscriber(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(20))
+    email = db.Column(db.String(), unique = True)               
