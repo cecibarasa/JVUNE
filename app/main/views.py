@@ -4,7 +4,8 @@ from ..requests import get_quote
 from flask_login import login_required,current_user
 from .forms import UpdateProfile,BlogForm,CommentForm,SubscriberForm
 from .. import db,photos
-from ..models import User,Blog,Comment,PhotoProfile,Upvote,Downvote,Subscriber
+from ..models import User, Blog, Comment, PhotoProfile, Upvote, Downvote, Subscriber
+from flask_mail import Mail
 
 #views
 @main.route('/')
@@ -142,7 +143,7 @@ def upvote(id):
     blog = Blog.query.get(id)
     vote_mpya = Upvote(blog=blog, upvote=1)
     vote_mpya.save()
-    return redirect(url_for('main.blogs', blog_id=blog))
+    return redirect(url_for('main.blog', id=blog_id))
 
 @main.route('/dislike/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -150,7 +151,7 @@ def downvote(id):
     blog = Blog.query.get(id)
     vm = Downvote(blog=blog, downvote=1)
     vm.save()
-    return redirect(url_for('main.blogs', blog_id=blog))
+    return redirect(url_for('main.blog', id=blog_id))
 
 @main.route('/subscribe', methods=['GET','POST'])
 def subscriber():
@@ -163,10 +164,10 @@ def subscriber():
         db.session.add(subscriber)
         db.session.commit()
 
-        mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+        # mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
 
         title= "JVUNE"
-        return render_template('index.html',title=title, blogs=blogs, subscriber_form = subscriber_form)
+        return render_template('blogs.html',title=title, blog=blog, subscriber_form = subscriber_form)
 
     subscriber = Blog.query.all()
 
