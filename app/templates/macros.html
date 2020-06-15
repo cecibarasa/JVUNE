@@ -2,7 +2,7 @@
 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
     <div style="border: 1px solid #6184D8; border-radius: 5px; padding: 10px; font-size:16px; margin: 10px;">
         <h4>{{blog.title}}</h4>
-        <p>{{blog.content| truncate(100)}}</p>
+        <p onmouseover="this.style.backgroundColor='#6184D8'">{{blog.content| truncate(100)}}</p>
         <p>Written by: {{blog.user.username}} <br> <a href="/blog/{{blog.id}}" class="btn btn-primary" style="margin-top: 10px; background-color: #6184D8; color: #000; border:none;">View Blog</a> </p>
     </div>
 </div>
@@ -10,7 +10,7 @@
 <div class="col-md-6">
     <h5>{{comment.name}}</h5>
     <p>{{comment.comment}}</p>
-    <button style="background-color: #fff;border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" type="button" class="btn btn-sm" data-toggle="modal" data-target="#deleteCommentModal">Delete Comment</button>
+    <button style="background-color: #fff;border:1px solid #6184D8;color:#000;" onmouseover="this.style.backgroundColor='#6184D8'" onmouseout="this.style.backgroundColor='#fff'" type="button" class="btn btn-sm" data-toggle="modal" data-target="#deleteCommentModal"><i class="far fa-trash-alt"></i>&nbsp;Delete Comment</button>
 </div>
 <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
