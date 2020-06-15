@@ -66,10 +66,10 @@ def new_blog():
     
     form = BlogForm()
     if form.validate_on_submit():
-        title = form.title.data
+        author = form.author.data
         blog = form.text.data
 
-        new_blog = Blog(blog_title = title,blog_content = blog, user = current_user)
+        new_blog = Blog(blog_title = author,blog_content = blog, user = current_user)
         new_blog.save_blog()
         
 
