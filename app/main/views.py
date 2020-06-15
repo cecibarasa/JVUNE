@@ -2,9 +2,9 @@ from flask import render_template, request, redirect,url_for,abort
 from . import main
 from ..requests import get_quote
 from flask_login import login_required,current_user
-from .forms import UpdateProfile,BlogForm,CommentForm
+from .forms import UpdateProfile,BlogForm,CommentForm,SubscriberForm
 from .. import db,photos
-from ..models import User,Blog,Comment,PhotoProfile,Upvote,Downvote
+from ..models import User,Blog,Comment,PhotoProfile,Upvote,Downvote,Subscriber
 
 #views
 @main.route('/')
@@ -166,7 +166,7 @@ def subscriber():
         mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
 
         title= "JVUNE"
-        return render_template('index.html',title=title, blogs=blogs)
+        return render_template('index.html',title=title, blogs=blogs, subscriber_form = subscriber_form)
 
     subscriber = Blog.query.all()
 
