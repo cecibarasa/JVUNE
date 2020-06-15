@@ -71,7 +71,7 @@ def new_blog():
 
         new_blog = Blog(blog_title = title,blog_content = blog, user = current_user)
         new_blog.save_blog()
-        format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
+        
 
         return redirect(url_for('main.blogs'))
 
