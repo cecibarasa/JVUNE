@@ -8,4 +8,6 @@
     overflow-y: scroll;
     box-sizing: content-box;
     background-attachment: fixed;
+    margin: 0;
+    padding: 0;
 }

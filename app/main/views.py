@@ -2,10 +2,11 @@ from flask import render_template, request, redirect,url_for,abort
 from . import main
 from ..requests import get_quote
 from flask_login import login_required,current_user
-from .forms import UpdateProfile,BlogForm,CommentForm,SubscriberForm
+from .forms import UpdateProfile,BlogForm,CommentForm
 from .. import db,photos
 from ..models import User, Blog, Comment, PhotoProfile, Upvote, Downvote, Subscriber
 from flask_mail import Mail
+import markdown2
 
 #views
 @main.route('/')
@@ -70,6 +71,7 @@ def new_blog():
 
         new_blog = Blog(blog_title = title,blog_content = blog, user = current_user)
         new_blog.save_blog()
+        format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
 
         return redirect(url_for('main.blogs'))
 
@@ -157,24 +159,24 @@ def downvote(id):
 
     return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
 
-@main.route('/subscribe', methods=['GET','POST'])
-def subscriber():
-    subscriber_form=SubscriberForm()
-    blogs = Blog.query.order_by(Blog.posted.desc()).all()
-    subscriber = Blog.query.all()
+# @main.route('/subscribe', methods=['GET','POST'])
+# def subscriber():
+#     subscriber_form=SubscriberForm()
+#     blogs = Blog.query.order_by(Blog.posted.desc()).all()
+#     subscriber = Blog.query.all()
 
-    blogs = Blog.query.all()
+#     blogs = Blog.query.all()
 
-    if subscriber_form.validate_on_submit():
-        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+#     if subscriber_form.validate_on_submit():
+#         subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
 
-        db.session.add(subscriber)
-        db.session.commit()
+#         db.session.add(subscriber)
+#         db.session.commit()
 
-        #mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+#         #mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
 
-        title= "JVUNE"
-        return redirect(url_for('main.blogs', title=title, blog=blog, subscriber_form=subscriber_form))
+#         title= "JVUNE"
+#         return redirect(url_for('main.blogs', title=title, blog=blog, subscriber_form=subscriber_form))
 
 
-    return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)    
+#     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)    

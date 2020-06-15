@@ -1,8 +1,8 @@
 from flask import render_template,redirect,url_for,flash,request
 from . import auth
 from flask_login import login_user,logout_user,login_required
-from ..models import User
-from .forms import LoginForm,RegistrationForm
+from ..models import User,Blog,Subscriber
+from .forms import LoginForm,RegistrationForm,SubscriberForm
 from .. import db
 from ..email import mail_message
 
@@ -41,5 +41,25 @@ def register():
         return redirect(url_for('auth.login'))
         title = "New Account"
     return render_template('auth/register.html', registration_form=form)
-    
-    
+
+@auth.route('/subscribe', methods=['GET','POST'])
+def subscriber():
+    subscriber_form=SubscriberForm()
+    blogs = Blog.query.order_by(Blog.posted.desc()).all()
+    subscriber = Blog.query.all()
+
+    blogs = Blog.query.all()
+
+    if subscriber_form.validate_on_submit():
+        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to JVUNE","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+
+        title= "JVUNE"
+        return redirect(url_for('main.blogs', title=title, blogs=blogs, subscriber_form=subscriber_form))
+
+
+    return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form)    

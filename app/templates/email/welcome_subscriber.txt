@@ -1,0 +1,4 @@
+Hello {{name}}, thank you for subscribing to JVUNE blogs where we keep you posted on the latest posted blogs!
+
+Regards,
+ceciheroku!
