@@ -87,7 +87,7 @@ class Blog(db.Model):
         return blog
 
     def __repr__(self):
-        return f'Blog {self.blog_title}'
+        return f'Blog {self.blog_author}'
 
 
 class Comment(db.Model):

@@ -4,12 +4,12 @@ import unittest
 
 class BlogTest(unittest.TestCase):
     def setUp(self):
-        self.new_user = User(username = 'Minions', password = 'banana', email = 'janedoe@demo.com')
-        self.new_blog = Blog(blog_title='Blog', blog_content='Blog content')
+        self.new_user = User(username = 'Minions', password = 'matata', email = 'janedoe@demo.com')
+        self.new_blog = Blog(blog_author='Blog', blog_content='Blog content')
         
     def test_check_instance(self):
         
-        self.assertEquals(self.new_blog.blog_title,'Blog')
+        self.assertEquals(self.new_blog.blog_author,'Blog')
         self.assertEquals(self.new_blog.blog_content, 'Blog content')
         
 
