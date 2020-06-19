@@ -69,7 +69,7 @@ def new_blog():
         author = form.author.data
         blog = form.text.data
 
-        new_blog = Blog(blog_title = author,blog_content = blog, user = current_user)
+        new_blog = Blog(blog_author = author,blog_content = blog, user = current_user)
         new_blog.save_blog()
         
 
@@ -128,13 +128,13 @@ def update_blog(id):
     blog = Blog.get_blog(id)
     form = BlogForm()
     if form.validate_on_submit():
-        blog.blog_title = form.title.data
+        blog.blog_author = form.author.data
         blog.blog_content = form.text.data
         
         db.session.commit()
         return redirect(url_for('main.blogs', id = id))
     elif request.method == 'GET':
-        form.title.data = blog.blog_title
+        form.author.data = blog.blog_author
         form.text.data = blog.blog_content
     
     return render_template('new_blog.html', blog_form=form, id=id)
