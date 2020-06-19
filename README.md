@@ -1,3 +1,4 @@
+[![codebeat badge](https://codebeat.co/badges/4674b661-7f89-4877-afd3-1b2e316a2888)](https://codebeat.co/projects/github-com-cecibarasa-jvune-master)
 ### JVUNE
 
 # By Cecilia Barasa
